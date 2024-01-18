@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resistor Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Resistor Color Code Calculator</h1>
+
+  <form id="resistorForm">
+    <label for="band1">First Band Color:</label>
+    <select id="band1">
+      <!-- Add color options here -->
+    </select>
+
+    <label for="band2">Second Band Color:</label>
+    <select id="band2">
+      <!-- Add color options here -->
+    </select>
+
+    <label for="band3">Third Band Color (Multiplier):</label>
+    <select id="band3">
+      <!-- Add color options here -->
+    </select>
+
+    <label for="band4">Fourth Band Color (Tolerance):</label>
+    <select id="band4">
+      <!-- Add color options here -->
+    </select>
+
+    <button type="button" onclick="calculateResistance()">Calculate</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    // Color codes and their corresponding values
+    var colorCodes = {
+      'black': 0,
+      'brown': 1,
+      'red': 2,
+      'orange': 3,
+      'yellow': 4,
+      'green': 5,
+      'blue': 6,
+      'violet': 7,
+      'gray': 8,
+      'white': 9
+    };
+
+    function calculateResistance() {
+      var band1 = document.getElementById('band1').value;
+      var band2 = document.getElementById('band2').value;
+      var band3 = document.getElementById('band3').value;
+      var band4 = document.getElementById('band4').value;
+
+      if (band1 in colorCodes && band2 in colorCodes && band3 in colorCodes && band4 in colorCodes) {
+        var resistance = (colorCodes[band1] * 100 + colorCodes[band2] * 10 + colorCodes[band3]) * Math.pow(10, colorCodes[band4]);
+        document.getElementById('result').innerHTML = 'The resistance value is ' + resistance + ' ohms.';
+      } else {
+        document.getElementById('result').innerHTML = 'Invalid color code. Please enter valid color codes.';
+      }
+    }
+
+    // Populate color options in the select elements
+    function populateColorOptions() {
+      var colorOptions = '';
+      for (var color in colorCodes) {
+        colorOptions += '<option value="' + color + '">' + color + '</option>';
+      }
+
+      document.getElementById('band1').innerHTML = colorOptions;
+      document.getElementById('band2').innerHTML = colorOptions;
+      document.getElementById('band3').innerHTML = colorOptions;
+      document.getElementById('band4').innerHTML = colorOptions;
+    }
+
+    // Call the function to populate color options when the page loads
+    window.onload = populateColorOptions;
+  </script>
+
+</body>
+</html>
